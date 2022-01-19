@@ -2,33 +2,16 @@ import { useState } from "react";
 
 function App() {
   const [count, setCount] = useState(0);
-  const [action, setAction] = useState({
-    isIncrement: false,
-    isDecrement: false,
-    isReset: true,
-  });
-  // const [isIncrement, setIsIncrement] = useState(false);
+  const [action, setAction] = useState({});
 
-  const handleIncrement = () => {
-    const isIncrement = true,
-      isDecrement = false,
-      isReset = false;
-    setCount(count + 1);
-    setAction({ isIncrement, isDecrement, isReset });
-  };
-  const handleDecrement = () => {
-    const isIncrement = false,
-      isDecrement = true,
-      isReset = false;
-    setCount(count - 1);
-    setAction({ isIncrement, isDecrement, isReset });
-  };
-  const handleReset = () => {
-    const isIncrement = false,
-      isDecrement = false,
-      isReset = true;
-    setCount(0);
-    setAction({ isIncrement, isDecrement, isReset });
+  const handleAction = (e) => {
+    const { name } = e.target;
+    "isReset" === name
+      ? setCount(0)
+      : "isDecrement" === name
+      ? setCount(count - 1)
+      : setCount(count + 1);
+    setAction({ [name]: true });
   };
 
   const { isIncrement, isDecrement } = action;
@@ -49,13 +32,13 @@ function App() {
       >
         {count}
       </p>
-      <button onClick={handleIncrement} id="increment">
+      <button onClick={handleAction} id="increment" name="isIncrement">
         Increment
       </button>
-      <button onClick={handleDecrement} id="decrement">
+      <button onClick={handleAction} id="decrement" name="isDecrement">
         Decrement
       </button>
-      <button onClick={handleReset} id="reset">
+      <button onClick={handleAction} id="reset" name="isReset">
         Reset
       </button>
     </div>
